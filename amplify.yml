@@ -19,9 +19,6 @@ frontend:
 
 backend:
   phases:
-    preBuild:
-      commands:
-        - npm install -g @aws-amplify/backend-cli
     build:
       commands:
         - npx @aws-amplify/backend-cli sandbox --once

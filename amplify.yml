@@ -25,4 +25,3 @@ backend:
     build:
       commands:
         - npx @aws-amplify/backend-cli sandbox --once
-        - npx @aws-amplify/backend-cli generate outputs --format ts --out-dir src

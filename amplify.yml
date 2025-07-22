@@ -1,12 +1,11 @@
 version: 1
-backend:
-  phases:
-    build:
-      commands:
-        - npm ci --cache .npm --prefer-offline
-        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:
+    preBuild:
+      commands:
+        - nvm install 20
+        - nvm use 20
+        - npm install
     build:
       commands:
         - npm run build
@@ -16,5 +15,14 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - .npm/**/*
-      - node_modules/**/*
+      - node_modules/**
+
+backend:
+  phases:
+    preBuild:
+      commands:
+        - npm install -g @aws-amplify/backend-cli
+    build:
+      commands:
+        - npx @aws-amplify/backend-cli sandbox --once
+        - npx @aws-amplify/backend-cli generate outputs --format ts --out-dir src
